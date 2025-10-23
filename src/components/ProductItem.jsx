@@ -1,8 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {useProducts} from "../context/productContext.jsx";
 
-function ProductItem({product}) {
-    const {id, title, price} = product;
+function ProductItem(props) {
+
+    const {productId} = props;
+    const products = useProducts();
+    const product = products.products.find(item => item.id === productId);
+
+    if (!product) {
+        return null;
+    }
+   const {id, title, price} = product;
     return (
         <Link to={`/products/${id}`}>
         <div className="product-card">
